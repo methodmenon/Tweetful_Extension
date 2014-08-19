@@ -8,9 +8,12 @@ from urls import *
 def get_retweets(tweet_id):
     auth = authorization.authorize()
     """retrieve up to the last 100 retweets of a particular tweet specified by the id parameter"""
-    retweet_url = RETWEET_URL
-    retweet_url = retweet_url.format(tweet_id = tweet_id)
-    return requests.get(retweet_url, auth=auth)
+    recent_retweet_url = RECENT_RETWEET_URL
+    recent_retweet_url = recent_retweet_url.format(tweet_id = tweet_id)
+    return requests.get(recent_retweet_url, auth=auth)
+
+#def retweet(tweet_id):
+
  
 def main():
     """ Main function """
