@@ -18,17 +18,27 @@ def retweet(tweet_id):
     auth = authorization.authorize()
     retweet_url = RETWEET_URL
     retweet_url = retweet_url.format(tweet_id = tweet_id)
-    return requests.get(retweet_url, auth=auth)
+    return requests.post(retweet_url, auth=auth)
 
 
 
  
 def main():
     """ Main function """
-    #tweet id for the moment: 500081119417470976
     auth = authorization.authorize()
-    response = get_tweet(sys.argv[1])
+    #prompt the user to enter the tweet_id
+    user_input_tweet_id = raw_input("Please enter the id of the tweet you are interested in: ")
+    print("Getting the contents of the tweet")
+    response = get_tweet(user_input_tweet_id)
     print json.dumps(response.json(), indent=4)
+    #Prompt the user if they wish to retweet this tweet or try another tweet id
+    print("Please note that you cannot retweet a tweet more than once!")
+    user_input_retweet = raw_input("Type Y if you would like to retweet this tweet.\nType anything else if you do not: ")
+    if (user_input_retweet == "Y"):
+        response = retweet(user_input_tweet_id)
+        print json.dumps(response.json(), indent=4)
+    else:
+        print"I see you don't find this interesting!\nYou should find another tweet!"
  
 if __name__ == "__main__":
     main()
