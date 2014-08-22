@@ -37,6 +37,6 @@ Icon
 .Trashes
 
 #Python files
-.pyc
+*.pyc
 access.json
-secret.py
+env
