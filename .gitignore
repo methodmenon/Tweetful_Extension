@@ -40,3 +40,5 @@ Icon
 *.pyc
 access.json
 env
+send_tweet.py
+copy_tweepy_binder.py

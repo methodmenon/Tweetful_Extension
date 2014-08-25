@@ -7,3 +7,4 @@ TIMELINE_URL = API_URL + "/1.1/statuses/home_timeline.json"
 #the rest are for the twitter extension
 GET_TWEET_URL = API_URL + "/1.1/statuses/show/{tweet_id}.json"
 RETWEET_URL = API_URL + "/1.1/statuses/retweet/{tweet_id}.json"
+TWEET_URL = "https://api.twitter.com/1.1/statuses/update.json"
