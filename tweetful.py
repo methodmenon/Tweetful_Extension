@@ -28,41 +28,37 @@ def tweet(message, auth):
     data = {'status': message}
     return requests.post(tweet_url, data=data, auth=auth)
 
-"""
 def main():
-    auth = authorization.authorize()
-    #user_input = raw_input("Please type your status: ")
-    status = "this is a test"
-    response = tweet(status, auth)
-    print json.dumps(response.json(), indent=4)
-"""
-
-
-def main():
-    #Main function
-    #auth = authorization.authorize()
     parser = argparse.ArgumentParser()
-    parser.add_argument("tweet_id", help = "Enter the tweet id for a tweet you are interested in")
-    parser.add_argument("--status", type = str, help = "Type what you want to tweet")
+    parser.add_argument("--tweet_id", help = "Enter the tweet id for a tweet you are interested in", action = "store_true")
+    parser.add_argument("--tweet", help = "Update your twitte status", action = "store_true")
     args = parser.parse_args()
-    #prompt the user to enter the tweet_id
-    #user_input_tweet_id = raw_input("Please enter the id of the tweet you are interested in: ")
-    auth = authorization.authorize()
-    print("Getting the contents of the tweet")
-    response = get_tweet(args.tweet_id, auth)
-    print json.dumps(response.json(), indent=4)
-    #Prompt the user if they wish to retweet this tweet or try another tweet id
-    print("Please note that you cannot retweet a tweet more than once!")
-    user_input_retweet = raw_input("Type Y if you would like to retweet this tweet.\nType anything else if you do not: ")
-    if (user_input_retweet == "Y"):
-        response = retweet(args.tweet_id, auth)
-        print json.dumps(response.json(), indent=4)
-    else:
-        print"I see you don't find this interesting!\nYou should find another tweet!"
     
-    if (args.status >= 1):
-        response = tweet(args.status, auth)
+    if (args.tweet_id):
+        auth = authorization.authorize()
+        #prompt the user to enter the tweet_id
+        tweet_id = raw_input("Please enter the id of the tweet you are interested in: ")
+        print("Getting the contents of the tweet")
+        response = get_tweet(tweet_id, auth)
         print json.dumps(response.json(), indent=4)
+        #Prompt the user if they wish to retweet this tweet or try another tweet id
+        print("Please note that you cannot retweet a tweet more than once!")
+        user_input_retweet = raw_input("Type Y if you would like to retweet this tweet.\nType anything else if you do not: ")
+        if (user_input_retweet == "Y"):
+            response = retweet(tweet_id, auth)
+            print json.dumps(response.json(), indent=4)
+        else:
+            print"I see you don't find this interesting!\nYou should find another tweet!"
+
+    if (args.tweet):
+        auth = authorization.authorize()
+        user_input = raw_input("Please type your status: ")
+        #leave blank if you don't want to tweet anything
+        if (user_input == ""):
+            print "I guess you have nothing to tweet"
+        else:
+            response = tweet(user_input, auth)
+            print json.dumps(response.json(), indent=4)
 
 if __name__ == "__main__":
     main()
